@@ -1,0 +1,30 @@
+extends layout.pug 
+
+block content 
+    .main.container 
+    .row
+        h1.display-4.m-l-1 Enter book info
+        form(method='POST' action='/submit')
+          div.form-group
+            label(for='title') Title
+            input.form-control(type='text' id='title' placeholder='Title' name='title')
+          div.form-group
+            label(for='author') Author
+            input.form-control(type='author' id='author' placeholder='Author' name='author')
+          div.form-group
+            label(for='nationality') Nationality
+            input.form-control(type='nationality' id='nationality' placeholder="Author's nationality" name='nationality')
+          div.form-group
+            label(for='published') Publication Year
+            input.form-control(type='published' id='published' placeholder='Publication Year' name='published')
+          div.form-group
+            label(for='last_finished') Completed Date
+            input.form-control(type='last_finished' id='last_finished' placeholder='Finished Reading Date' name='last_finished')
+          div.form-group
+            label(for='tally') Number of times read
+            input.form-control(type='tally' id='tally' placeholder='Number of Times Read' name='tally')
+          div.form-group
+            label(for='pages') Number of Pages
+            input.form-control(type='pages' id='pages' placeholder='Number of Pages' name='pages')
+
+            button.btn.btn-primary.test(type='submit') Submit Entry  

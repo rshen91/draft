@@ -1,0 +1,52 @@
+/*F4E8C1
+A0C1B9
+70A0AF
+706993
+331E38
+*/
+
+* {
+    margin: 1rem;
+}
+
+html, body {
+    height: 100%;
+    text-decoration-color: #331E38;
+}
+
+
+.form-control {
+    border-color: #331E38;
+}
+
+.test {
+    font-family: Arial;
+    background: #706993;
+    color: #FFFFFF;
+}
+
+.test:hover {
+    background: #A0C1B9;
+}
+
+button {
+
+    margin-top: 2rem;
+}
+/* media query for larger devices */
+@media screen and (min-width: 675px) {
+
+    .form-group{
+        width: 45%;
+    }
+
+/*make the two column layout for larger devices only*/
+    .form-group:nth-child(1n) {
+        float: left;
+    }
+
+    .form-group:nth-child(2n) {
+        float: right;
+    }
+
+}
