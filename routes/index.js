@@ -9,14 +9,16 @@ router.get("/", (req, res) => {
     console.log(res.status);
     var client = new elasticsearch.Client({
         host: 'localhost:9200',
-        apiVersion: '5.6',
-    });
+        // apiVersion: '6.2.2',
+        httpAuth: 'elastic:changeme'
+    })
     client.ping({
         requestTimeout: 30000,
     }, function(error) {
         if (error) {
             console.error('ES cluster is down');
         } else {
+            console.log("Are you here?");
             console.log('All is well!');
         }
     });
@@ -37,3 +39,40 @@ router.get("/", (req, res) => {
 });
 
 module.exports = router;
+
+// PUT books_new
+// {
+//   "settings": {
+//     "index": {
+//       "number_of_shards": "1",
+//       "number_of_replicas": "0"
+//     }
+//   },
+//   "mappings": {
+//     "books": {
+//       "properties": {
+//         "title": {
+//           "type": "keyword"
+//         },
+//         "author": {
+//           "type": "keyword"
+//         },
+//         "nationality": {
+//           "type": "keyword"
+//         },
+//         "publication_year": {
+//           "type": "text"
+//         },
+//         "completion": {
+//           "type": "text"
+//         },
+//         "number_of_times_read": {
+//           "type": "text"
+//         },
+//         "number_of_pages": {
+//           "type": "text"
+//         }
+//       }
+//     }
+//   }
+// }

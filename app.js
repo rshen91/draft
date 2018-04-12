@@ -16,6 +16,15 @@ app.use(routes);
 //For the app to see your style sheets
 app.use(express.static(__dirname + '/public'));
 
+var apm = require('elastic-apm-node').start({
+    // Set required service name (allowed characters: a-z, A-Z, 0-9, -, _, and space)
+    serviceName: 'draft',
+    // Use if APM Server requires a token
+    // secretToken: '',
+    // Set custom APM Server URL (default: http://localhost:8200)
+    // serverUrl: ''
+})
+
 app.use((req, res, next) => {
     console.log('one');
     next();
