@@ -1,44 +1,29 @@
-const express = require('express');
-const router = express.Router();
-var elasticsearch = require('elasticsearch');
+Integrating this with APM 
 
-
-
-router.get("/", (req, res) => {
-    res.render('index');
-    console.log(res.status);
-    var client = new elasticsearch.Client({
-        host: 'localhost:9200',
-        // apiVersion: '6.2.2',
-        httpAuth: 'elastic:changeme'
-    })
-    client.ping({
-        requestTimeout: 30000,
-    }, function(error) {
-        if (error) {
-            console.error('ES cluster is down');
-        } else {
-            console.log("Are you here?");
-            console.log('All is well!');
-        }
-    });
-    client.search({
-        index: 'books_new',
-        body: {
-            query: {
-                match_all: {
-                }
-            }
-        }
-    }).then(function(resp){
-        var hits = resp.hits.hits;
-        console.log(hits);
-    }, function (err) {
-        console.trace(err.message);
-    });
-});
-
-module.exports = router;
+The biggest confusion for me in setting up APM was more with the correct permissions to start running it. There was a good link in the APM Kibana plugin (followed the directions from my Kibana). 
+Started up my local 6.2.2 cluster
+        Went to Kibana in the APM tab and then Mac
+        ./apm-server setup
+        
+        Exiting: error loading config file: config file ("apm-server.yml") must be owned by the beat user (uid=0) or root
+        
+        Ended up having to follow the same procedure as authorizing beats 
+        sudo chown root apm-server.yml
+        sudo ./apm-server setup
+        To run it I had to run: 
+        sudo ./apm-server -e
+        
+The install code for my node.js app was clear to insert: 
+In the app.js file I added:
+var apm = require('elastic-apm-node').start({
+    // Set required service name (allowed characters: a-z, A-Z, 0-9, -, _, and space)
+    serviceName: 'draft',
+    // Use if APM Server requires a token
+    // secretToken: '',
+    // Set custom APM Server URL (default: http://localhost:8200)
+    // serverUrl: ''
+})
+I had to add some documents into my cluster for APM to work, but that makes intuitive sense and I don't think this needs to be clarified
 
 // PUT books_new
 // {
